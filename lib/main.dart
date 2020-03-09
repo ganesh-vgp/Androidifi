@@ -3,19 +3,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import './data/mock_data.dart';
 import './style.dart';
-import './menu_item.dart';
 import './home/home.dart';
 import './about_us/about_us.dart';
+import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 
 void main() {
+  final List<Map<String, dynamic>> _menuItems = MockData.menuItems;
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Androidifi',
       home: Androidifi(),
       theme: ThemeData(
-        primaryColor: Colors.blue,
-        fontFamily: 'Montserrat',
+        primaryColor: Color(_menuItems[0]['color']),
+        fontFamily: 'GoogleSans',
       ),
     ),
   );
@@ -29,7 +30,6 @@ class Androidifi extends StatefulWidget {
 class _AndroidifiState extends State<Androidifi> {
   final List<Map<String, dynamic>> _menuItems = MockData.menuItems;
   final String logoUrl = 'assets/images/logo.png';
-
   int _index = 0;
 
   List<Color> _colors = [];
@@ -59,82 +59,80 @@ class _AndroidifiState extends State<Androidifi> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _index == 0 ? 'ANDROIDIFI' : _menuItems[_index]["name"],
-          style: Style.heading,
-        ),
-        centerTitle: true,
-        backgroundColor: _colors[_index],
-        iconTheme: Style.iconTheme,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(FontAwesomeIcons.instagram,),
-            onPressed: () async{
-              final String url='https://www.instagram.com/androidifi';
-              if(await canLaunch(url)){
-                await launch(url);
-              }
-            },
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Image.asset(
-                logoUrl,
-                height: 200.0,
-                width: 200.0,
-              ),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  border: Border(
-                bottom: BorderSide(
-                  color: Theme.of(context).dividerColor,
-                  width: 2.0,
-                ),
-              )),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _menuItems.length,
-                itemBuilder: (context, index) {
-                  return MenuItem(
-                    name: _menuItems[index]["name"],
-                    icon: _menuItems[index]["icon"],
-                    color: _isSelected[index]
-                        ? _dimColors[index]
-                        : Colors.transparent,
-                    isSelected: _isSelected[index],
-                    function: _select,
-                    index: index,
-                  );
+    return DefaultTabController(
+      length: _menuItems.length,
+      child: Builder(
+        builder: (context) {
+          print(DefaultTabController.of(context).index);
+          return Scaffold(
+            body: NestedScrollView(
+                headerSliverBuilder: (BuildContext context, bool isScrolled) {
+                  return <Widget>[
+                    new SliverAppBar(
+                      elevation: 5.0,
+                      backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                      title: Text(
+                        "ANDROIDIFI",
+                        style: Style.heading,
+                      ),
+                      leading: ImageIcon(
+                        Image.asset('assets/images/logo.png').image,
+                        size: 0,
+                      ),
+                      centerTitle: true,
+                      iconTheme: Style.iconTheme,
+                      actions: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.instagram,
+                            color: Color(0xffE1306C),
+                          ),
+                          onPressed: () async {
+                            final String url =
+                                'https://www.instagram.com/androidifi';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                      ],
+                      floating: true,
+                      pinned: true,
+                      snap:
+                          true, 
+                      bottom: TabBar(
+                        labelPadding: EdgeInsets.only(left: 5.0, right: 5.0),
+                        tabs: _menuItems
+                            .map((e) => Tab(text: e['name']))
+                            .toList(),
+                        isScrollable: false,
+                        onTap: (index) {
+                          setState(() {
+                            _index = index;
+                          });
+                        },
+                        labelStyle: Style.tabLabel,
+                        indicatorColor: Colors.white,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        labelColor: Color(_menuItems[_index]['color']),
+                        unselectedLabelColor: Color(0xff5f6368),
+                        indicator: MD2Indicator(
+                          indicatorHeight: 3,
+                          indicatorColor: Color(_menuItems[_index]['color']),
+                          indicatorSize: MD2IndicatorSize.full,
+                        ),
+                      ),
+                    ),
+                  ];
                 },
-                shrinkWrap: true,
-              ),
-            ),
-          ],
-        ),
+                body: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: _pages,
+                )),
+          );
+        },
       ),
-      body: _pages[_index],
     );
-  }
-
-  void _select(int index) {
-    setState(() {
-      _index = index;
-      _isSelected.clear();
-      _isSelected = [
-        false,
-        false,
-        false,
-        false,
-      ];
-      _isSelected[index] = true;
-    });
-    Navigator.pop(context);
   }
 }

@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 class MockData {
   static final List<Map<String, dynamic>> menuItems = [
     {
-      "name": "HOME",
+      "name": "Home",
       "color": 0xff4285f4,
       "dimColor": 0xff80b4ff,
       "icon": Icons.home,
     },
     {
-      "name": "REVIEWS",
+      "name": "Reviews",
       "color": 0xffDB4437,
       "dimColor": 0xffff7762,
       "icon": Icons.view_list,
     },
     {
-      "name": "SPEC",
+      "name": "Specs",
       "color": 0xffF4B400,
       "dimColor": 0xffffe64c,
       "icon": Icons.view_agenda,
     },
     {
-      "name": "ABOUT US",
+      "name": "About Us",
       "color": 0xff0F9D58,
       "dimColor": 0xff55cf86,
       "icon": Icons.contact_mail,

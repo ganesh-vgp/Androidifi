@@ -15,13 +15,13 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    super.initState();
     _fetchArticles.fetch().then((List<Article> articleList) {
       setState(() {
         _articleList = articleList;
         _isLoaded = true;
       });
     });
-    super.initState();
   }
 
   @override

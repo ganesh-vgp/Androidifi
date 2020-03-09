@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class Style {
   static final TextStyle heading = TextStyle(
     fontSize: 30.0,
-    fontFamily: 'Alata',
-    color: Colors.white,
+    fontFamily: 'GoogleSans',
+    color: Color(0xff5f6368),
     fontWeight: FontWeight.bold,
   );
 
@@ -14,7 +14,11 @@ class Style {
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
-
+  static final TextStyle tabLabel = TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'GoogleSans'
+  );
   static final TextStyle articleSubHeading = TextStyle(
     fontSize: 25.0,
     fontFamily: 'GoogleSans',
@@ -43,20 +47,8 @@ class Style {
     color: Colors.black,
   );
 
-  static final TextStyle menuItemUnSelected = TextStyle(
-    fontSize: 20.0,
-    fontFamily: 'Alata',
-    color: Colors.grey[600],
-  );
-
-  static final TextStyle menuItemSelected = TextStyle(
-    fontSize: 20.0,
-    fontFamily: 'Alata',
-    color: Colors.white,
-  );
-
   static final IconThemeData iconTheme = IconThemeData(
-    color: Colors.white,
+    color: Color(0xff5f6368),
   );
 
   static final TextStyle sliverHeading = TextStyle(
