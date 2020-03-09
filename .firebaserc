@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "androidifi",
+    "staging": "androidifi-2"
+  }
+}
