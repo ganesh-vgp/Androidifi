@@ -69,16 +69,31 @@ class _AndroidifiState extends State<Androidifi> {
                 headerSliverBuilder: (BuildContext context, bool isScrolled) {
                   return <Widget>[
                     new SliverAppBar(
-                      elevation: 5.0,
+                      elevation: 2.0,
+                      forceElevated: true,
                       backgroundColor:
                           Theme.of(context).scaffoldBackgroundColor,
-                      title: Text(
-                        "ANDROIDIFI",
-                        style: Style.heading,
-                      ),
-                      leading: ImageIcon(
-                        Image.asset('assets/images/logo.png').image,
-                        size: 0,
+                      automaticallyImplyLeading: false,
+                      titleSpacing: 0.0,
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          ImageIcon(
+                            Image.asset('assets/images/logo.png').image,
+                            size: 40,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            "Androidifi",
+                            style: Style.heading,
+                          ),
+                        ],
                       ),
                       centerTitle: true,
                       iconTheme: Style.iconTheme,
@@ -99,8 +114,7 @@ class _AndroidifiState extends State<Androidifi> {
                       ],
                       floating: true,
                       pinned: true,
-                      snap:
-                          true, 
+                      snap: true,
                       bottom: TabBar(
                         labelPadding: EdgeInsets.only(left: 5.0, right: 5.0),
                         tabs: _menuItems
@@ -120,7 +134,7 @@ class _AndroidifiState extends State<Androidifi> {
                         indicator: MD2Indicator(
                           indicatorHeight: 3,
                           indicatorColor: Color(_menuItems[_index]['color']),
-                          indicatorSize: MD2IndicatorSize.full,
+                          indicatorSize: MD2IndicatorSize.normal,
                         ),
                       ),
                     ),

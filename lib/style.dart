@@ -71,7 +71,8 @@ class Style {
     fontSize: 20.0,
     fontFamily: 'GoogleSans',
     color: Colors.white,
-    fontStyle: FontStyle.italic,
+    fontWeight: FontWeight.w200,
+    fontStyle: FontStyle.italic
   );
 
   static final TextStyle link = TextStyle(

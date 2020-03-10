@@ -30,72 +30,76 @@ class Bulletin extends StatelessWidget {
         child: Card(
           color: Colors.transparent,
           elevation: 1.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: Hero(
-                  tag: index.toString(),
-                  child: image,
-                ),
-              ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 20.0,
-                          right: 20.0,
-                        ),
-                        child: Text(
-                          heading,
-                          style: Style.text1,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            _getColorBar(Color(0xff4284f4), context),
-                            _getColorBar(Color(0xffDB4437), context),
-                            _getColorBar(Color(0xfff4b400), context),
-                            _getColorBar(Color(0xff0f9d58), context),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+          child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Hero(
+                      tag: index.toString(),
+                      child: image,
+                    ),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Icon(
-                            Icons.access_time,
-                            color: Colors.grey,
-                            size: 15.0,
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(right: 8.0),
-                            child: Text(
-                              formatTime(int.parse(this.timeStamp)),
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 20.0,
+                              right: 20.0,
                             ),
+                            child: Text(
+                              heading,
+                              style: Style.text1,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                _getColorBar(Color(0xff4284f4), context),
+                                _getColorBar(Color(0xffDB4437), context),
+                                _getColorBar(Color(0xfff4b400), context),
+                                _getColorBar(Color(0xff0f9d58), context),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Icon(
+                                Icons.access_time,
+                                color: Colors.grey,
+                                size: 15.0,
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  formatTime(int.parse(this.timeStamp)),
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
