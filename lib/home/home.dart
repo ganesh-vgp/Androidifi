@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _fetchArticles.fetch().then((List<Article> articleList) {
+    _fetchArticles.fetchArticles().then((List<Article> articleList) {
       setState(() {
         _articleList = articleList;
         _isLoaded = true;
@@ -52,7 +52,9 @@ class _HomeState extends State<Home> {
             child: SizedBox(
               width: 50.0,
               height: 50.0,
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4285f4)),
+              ),
             ),
           );
   }

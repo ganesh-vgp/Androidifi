@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import './data/mock_data.dart';
 import './style.dart';
 import './home/home.dart';
+import './review/reviews_list.dart';
 import './about_us/about_us.dart';
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 
@@ -32,28 +33,15 @@ class _AndroidifiState extends State<Androidifi> {
   final String logoUrl = 'assets/images/logo.png';
   int _index = 0;
 
-  List<Color> _colors = [];
-  List<Color> _dimColors = [];
-  List<IconData> _icons = [];
-  List<bool> _isSelected = [true];
-
   List<Widget> _pages = [
     Home(),
-    Center(child: Image.asset('assets/images/empty_state.png')),
+    ReviewsList(),
     Center(child: Image.asset('assets/images/empty_state.png')),
     AboutUs(),
   ];
 
   @override
   void initState() {
-    for (int i = 0; i < _menuItems.length; i++) {
-      _colors.add(Color(_menuItems[i]["color"]));
-      _dimColors.add(Color(_menuItems[i]["dimColor"]));
-      _icons.add(_menuItems[i]["icon"]);
-      if (i > 0) {
-        _isSelected.add(false);
-      }
-    }
     super.initState();
   }
 
@@ -63,7 +51,6 @@ class _AndroidifiState extends State<Androidifi> {
       length: _menuItems.length,
       child: Builder(
         builder: (context) {
-          print(DefaultTabController.of(context).index);
           return Scaffold(
             body: NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool isScrolled) {

@@ -20,10 +20,9 @@ class Style {
     fontFamily: 'GoogleSans'
   );
   static final TextStyle articleSubHeading = TextStyle(
-    fontSize: 25.0,
+    fontSize: 18.0,
     fontFamily: 'GoogleSans',
-    color: Colors.black,
-    fontWeight: FontWeight.bold,
+    color: Color(0xff5f6368),
   );
 
   static final TextStyle text1 = TextStyle(
@@ -81,5 +80,26 @@ class Style {
     fontWeight: FontWeight.bold,
     fontFamily: 'GoogleSans',
     decoration: TextDecoration.underline,
+  );
+
+  static final TextStyle review = TextStyle(
+    fontSize: 22,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'GoogleSans',
+  );
+
+  static final TextStyle phoneModel = TextStyle(
+    fontSize: 30.0,
+    fontFamily: 'GoogleSans',
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final TextStyle type = TextStyle(
+    fontSize: 25.0,
+    fontFamily: 'GoogleSans',
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
   );
 }

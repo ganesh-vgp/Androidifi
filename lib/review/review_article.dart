@@ -2,48 +2,68 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:time_formatter/time_formatter.dart';
-import 'package:link/link.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import './image_viewer.dart';
 import '../style.dart';
 
-class Article extends StatefulWidget {
-  final String heading;
-  final String headerImageUrl;
-  final String content;
-  final String links;
+class ReviewArticle extends StatefulWidget {
+  final String type;
+  final String brand;
+  final String model;
+  final String subHeading;
   final String timeStamp;
+  final String content;
   final String heroTag;
-  Article({
-    this.heading,
+  final String headerImageUrl;
+  final String rating;
+  ReviewArticle({
+    this.type,
+    this.brand,
+    this.model,
+    this.subHeading,
     this.headerImageUrl,
     this.content,
-    this.links,
     this.heroTag,
     this.timeStamp,
+    this.rating,
   });
 
-  factory Article.fromJSON(Map<String, dynamic> json) {
-    return Article(
-      heading: json['heading'],
-      headerImageUrl: json['headerImageUrl'],
-      content: json['content'],
-      links: json['links'],
+  factory ReviewArticle.fromJSON(Map<String, dynamic> json) {
+    return ReviewArticle(
+      type: json['type'],
+      brand: json['brand'],
+      model: json['model'],
+      subHeading: json['subHeading'],
       timeStamp: json['timeStamp'],
+      content: json['content'],
+      headerImageUrl: json['headerImageUrl'],
+      rating: json['rating'],
     );
   }
 
   @override
-  _ArticleState createState() => _ArticleState();
+  _ReviewArticleState createState() => _ReviewArticleState();
 }
 
-class _ArticleState extends State<Article> {
+class _ReviewArticleState extends State<ReviewArticle> {
   StringBuffer _shareContent = StringBuffer();
+
+  final List<String> _catagories = [
+    'Design',
+    'Performance',
+    'Battery Life',
+    'Camera',
+    'Value for money',
+    'Overall',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            backgroundColor: Color(0xffDB4437),
             elevation: 2.0,
             expandedHeight: 250.0,
             pinned: true,
@@ -122,18 +142,27 @@ class _ArticleState extends State<Article> {
 
   List<Widget> _listBuilder() {
     List<Widget> widgetList = List<Widget>();
-    _shareContent.write('Article posted by Androidifi\n');
-    _shareContent.write('\n*' + widget.heading + '*\n');
+    //_shareContent.write('Article posted by Androidifi\n');
+    //_shareContent.write('\n*' + widget.heading + '*\n');
     widgetList.add(
       Container(
         margin: EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              widget.heading.trim(),
-              style: Style.articleHeading,
+              widget.type.trim(),
+              style: Style.type,
               textAlign: TextAlign.left,
+            ),
+            Text(
+              widget.brand.trim() + ' ' + widget.model.trim(),
+              style: Style.phoneModel,
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 5.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -158,7 +187,31 @@ class _ArticleState extends State<Article> {
         ),
       ),
     );
+    List<String> ratings = widget.rating.split(',');
+    Widget ratingWidget = GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: _catagories.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          childAspectRatio: 0.85,
+        ),
+        itemBuilder: (_, index) =>
+            _getratingBar(ratings[index], _catagories[index]));
     List<String> list = widget.content.split('|');
+    widgetList.add(ratingWidget);
+    widgetList.add(Divider(
+      color: Colors.grey,
+      endIndent: 10.0,
+      height: 2,
+      indent: 10.0,
+      thickness: 0.7,
+    ));
+    widgetList.add(
+      SizedBox(
+        height: 5.0,
+      ),
+    );
     for (String s in list) {
       widgetList.add(
         Container(
@@ -167,49 +220,6 @@ class _ArticleState extends State<Article> {
         ),
       );
     }
-    List<String> eLinks = widget.links.split('|');
-    List<Widget> linkWidgets = List<Widget>();
-    int count = 1;
-    int length = eLinks.length;
-    for (String eLink in eLinks) {
-      final RegExp regExp = new RegExp(
-          r'(?:[-a-zA-Z0-9@:%_\+~.#=]{2,256}\.)?([-a-zA-Z0-9@:%_\+~#=]*)\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)');
-      final match = regExp.firstMatch(eLink);
-      final String link = match.group(1);
-      print(eLink);
-      linkWidgets.add(
-        Link(
-          url: eLink,
-          child: Text(
-            link.toUpperCase(),
-            style: Style.link,
-          ),
-          onError: () => print('error'),
-        ),
-      );
-      if (count != length) {
-        linkWidgets.add(
-          Text(
-            '|',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        );
-      }
-      count++;
-    }
-    widgetList.add(
-      Wrap(
-        alignment: WrapAlignment.center,
-        children: linkWidgets,
-        spacing: 5.0,
-        runSpacing: 5.0,
-      ),
-    );
-    widgetList.add(
-      SizedBox(
-        height: 80.0,
-      ),
-    );
     return widgetList;
   }
 
@@ -238,6 +248,28 @@ class _ArticleState extends State<Article> {
           heroTag: tag,
         ),
       ),
+    );
+  }
+
+  Widget _getratingBar(String value, String catagory) {
+    return CircularPercentIndicator(
+      radius: 80.0,
+      lineWidth: 5.0,
+      animation: true,
+      animationDuration: 1000,
+      percent: double.parse(value) / 10,
+      center: Text(
+        (double.parse(value)).toString() + '/10'.trim(),
+        style: TextStyle(fontSize: 18.0, color: Colors.black),
+        textAlign: TextAlign.center,
+      ),
+      circularStrokeCap: CircularStrokeCap.round,
+      footer: Text(
+        catagory,
+        style: TextStyle(fontSize: 18.0, color: Colors.black),
+        textAlign: TextAlign.center,
+      ),
+      progressColor: Color(0xffDB4437),
     );
   }
 }

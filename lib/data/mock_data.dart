@@ -94,4 +94,37 @@ class MockData {
       "hero": "tag8",
     },
   ];
+
+  static final List<Map<String,dynamic>> reviewArticles=[
+    {
+      'type': 'Initial Thoughts',
+      'brand': 'Google',
+      'model': 'Pixel 4a',
+      'subHeading': 'The deal breaker',
+      'headerImageUrl': 'https://i.imgur.com/s8TFZGo.jpg',
+      'content': 'ganesh prabhu v',
+      'timeStamp': 1579246505844,
+      'rating':'2,4,6,8,5,7'
+    },
+    {
+      'type': 'Review',
+      'brand': 'Google',
+      'model': 'Pixel 4a',
+      'subHeading': 'The deal breaker',
+      'headerImageUrl': 'https://i.imgur.com/s8TFZGo.jpg',
+      'content': 'ganesh prabhu v',
+      'timeStamp': 1579246505844,
+      'rating':'2,4,6,8,5,7'
+    },
+    {
+      'type': 'Redux',
+      'brand': 'Samsung',
+      'model': 'Galaxy S20 Ultra',
+      'subHeading': 'The deal breaker',
+      'headerImageUrl': 'https://i.imgur.com/s8TFZGo.jpg',
+      'content': 'ganesh prabhu v',
+      'timeStamp': 1579246505844,
+      'rating':'2,4,6,7.5,5,7'
+    },
+  ];
 }
